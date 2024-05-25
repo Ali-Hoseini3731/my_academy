@@ -1,0 +1,7 @@
+.idea/
+
+*_settings.py
+
+*.pyc
+
+*.sqlite3
