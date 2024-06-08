@@ -5,7 +5,7 @@ from catalogue.models import Product, Category, Brand
 
 
 def products_list(request):
-    products = Product.objects.select_related("category", "brand", "product_type").all()
+    products = Product.objects.all()
     context = [
         (f"{product.title}--{product.upc}--{product.product_type.title}"
          f"--{product.category.title}--{product.brand}--{product.is_active} <br>") for product in products
@@ -20,6 +20,13 @@ def product_detail(request, pk):
         return HttpResponse("this product does not exist")
 
     return HttpResponse(product)
+
+
+def product_search(request):
+    title = request.GET.get("title")
+    products = Product.objects.filter(is_active=True, title__icontains=title)
+    context = [f"{product.title}--{product.upc}---{product.stock}<br>" for product in products]
+    return HttpResponse(context)
 
 
 def category_products(request, pk):
