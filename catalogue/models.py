@@ -1,6 +1,17 @@
 from django.db import models
 
 
+class ProductManager(models.Manager):
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).select_related("category", "brand", "product_type")
+
+    def actives(self, *args, **kwargs):
+        return self.get_queryset(*args, **kwargs).filter(is_active=True)
+
+    def deactives(self, *args, **kwargs):
+        return self.get_queryset(*args, **kwargs).exclude(is_active=True)
+
+
 class ProductType(models.Model):
     title = models.CharField(max_length=32)
     description = models.TextField(blank=True, null=True)
@@ -59,6 +70,13 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.title}--{self.upc}--{self.description}--{self.product_type}--{self.category}"
+
+    @property
+    def stock(self):
+        return self.partners.all().order_by('price').first()
+
+    default_manager = models.Manager()
+    objects = ProductManager()
 
 
 class ProductAttributeValue(models.Model):
