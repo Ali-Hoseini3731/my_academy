@@ -1,11 +1,10 @@
 from django.db.models import Q
 from django.http import HttpResponse
-
 from catalogue.models import Product, Category, Brand
 
 
 def products_list(request):
-    products = Product.objects.all()
+    products = Product.objects.active()
     context = [
         (f"{product.title}--{product.upc}--{product.product_type.title}"
          f"--{product.category.title}--{product.brand}--{product.is_active} <br>") for product in products
