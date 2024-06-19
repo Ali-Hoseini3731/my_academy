@@ -5,10 +5,10 @@ class ProductManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return super().get_queryset(*args, **kwargs).select_related("category", "brand", "product_type")
 
-    def actives(self, *args, **kwargs):
+    def active(self, *args, **kwargs):
         return self.get_queryset(*args, **kwargs).filter(is_active=True)
 
-    def deactives(self, *args, **kwargs):
+    def deactive(self, *args, **kwargs):
         return self.get_queryset(*args, **kwargs).exclude(is_active=True)
 
 
