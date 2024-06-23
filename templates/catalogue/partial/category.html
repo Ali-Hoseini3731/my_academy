@@ -1,0 +1,9 @@
+{% load category_tags %}
+
+{% get_category as categories %}
+
+<nav class="nav-bar">
+    {% for category in categories %}
+        <a class="nav-bar-items" href="{{ category.get_absolute_url }}">{{ category.title }}</a>
+    {% endfor %}
+</nav>

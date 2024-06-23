@@ -1,24 +1,28 @@
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
+
 from catalogue.models import Product, Category, Brand
 
 
 def products_list(request):
-    products = Product.objects.active()
-    context = [
-        (f"{product.title}--{product.upc}--{product.product_type.title}"
-         f"--{product.category.title}--{product.brand}--{product.is_active} <br>") for product in products
-    ]
-    return HttpResponse(context)
+    context = dict()
+    context["products"] = Product.objects.all()
+    context["categories"] = Category.objects.all()
+    return render(request, "catalogue/product-list.html", context)
 
 
 def product_detail(request, pk):
-    try:
-        product = Product.objects.get(Q(pk=pk) | Q(upc=pk))
-    except Product.DoesNotExist:
-        return HttpResponse("this product does not exist")
+    # try:
+    #     product = Product.objects.get(Q(pk=pk) | Q(upc=pk))
+    # except Product.DoesNotExist:
+    #     return HttpResponse("this product does not exist")
 
-    return HttpResponse(product)
+    queryset = Product.objects.filter(Q(pk=pk) | Q(upc=pk))
+    if queryset.exists():
+        product = queryset.first()
+        return render(request, "catalogue/product_detail.html", {"product": product})
+    return HttpResponse("product does not exist")
 
 
 def product_search(request):
@@ -28,7 +32,7 @@ def product_search(request):
     return HttpResponse(context)
 
 
-def category_products(request, pk):
+def category_detail(request, pk):
     try:
         category = Category.objects.prefetch_related("products").get(pk=pk)
 
@@ -36,9 +40,7 @@ def category_products(request, pk):
         return HttpResponse("category does not exist")
 
     products = category.products.all()
-    return HttpResponse(
-        [f"{product.title}--{product.upc}--{product.category.title} <br>" for product in products]
-    )
+    return render(request, "catalogue/category_detail.html", {"products": products})
 
 
 def brand_products(request, pk):

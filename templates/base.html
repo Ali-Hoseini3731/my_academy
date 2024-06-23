@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'catalogue/css/style.css' %}"/>
+    {% block extra %}{% endblock %}
+</head>
+<body>
+
+{% include "catalogue/partial/category.html" %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

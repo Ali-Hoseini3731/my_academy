@@ -1,0 +1,28 @@
+{% extends 'catalogue/base_catalogue.html' %}
+
+{% block title %} {{ product.title }} {% endblock %}
+
+{% block data %}
+    <div class="product-detail">
+        <ul>
+            <li>title: {{ product.title }}</li>
+            <li>upc: {{ product.upc }}</li>
+            <li>brand: {{ product.brand }}</li>
+            <li>category: {{ product.category }}</li>
+            <li>product_type: {{ product.product_type }}</li>
+            <li>description: {{ product.description }}</li>
+            <li>partners:
+                <ul>
+                    {% for partner in product.stocks %}
+                        <li>
+                        <span>partner: {{ partner.partner.name }}</span>
+                        <span>title: {{ partner.product.title }}</span>
+                        <span>price: {{ partner.price }}</span>
+                        </li>
+
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
