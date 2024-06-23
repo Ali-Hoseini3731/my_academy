@@ -32,6 +32,10 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse("category_detail", args=[self.pk])
+
 
 class Brand(models.Model):
     title = models.CharField(max_length=32)
@@ -74,6 +78,14 @@ class Product(models.Model):
     @property
     def stock(self):
         return self.partners.all().order_by('price').first()
+
+    @property
+    def stocks(self):
+        return self.partners.all().order_by("price")
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse("product_detail", args=[self.pk])
 
     default_manager = models.Manager()
     objects = ProductManager()

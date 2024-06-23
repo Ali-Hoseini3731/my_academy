@@ -1,0 +1,27 @@
+{% extends 'catalogue/base_catalogue.html' %}
+
+{% block title %} Category Products {% endblock %}
+
+{% block data %}
+
+    <div class="category-detail">
+        <ul>
+            {% for product in products %}
+                <li>
+                    <span>product_title: {{ product.title }}</span>
+                    <span>upc: {{ product.upc }}</span>
+                    <span>product_category: {{ product.category.title }}</span>
+                    <span>
+                    product_price:
+                        {% if product.stock %}
+                            ${{ product.stock.price }}
+                        {% else %}
+                            no price
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
