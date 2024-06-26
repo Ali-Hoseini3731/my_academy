@@ -4,6 +4,11 @@
 
 {% block data %}
     <div class="product-detail">
+        <div class="product-image">
+            {% for pi in product.images.all %}
+                <img src="{{ pi.image.url }}" />
+            {% endfor %}
+        </div>
         <ul>
             <li>title: {{ product.title }}</li>
             <li>upc: {{ product.upc }}</li>
@@ -15,9 +20,9 @@
                 <ul>
                     {% for partner in product.stocks %}
                         <li>
-                        <span>partner: {{ partner.partner.name }}</span>
-                        <span>title: {{ partner.product.title }}</span>
-                        <span>price: {{ partner.price }}</span>
+                            <span>partner: {{ partner.partner.name }}</span>
+                            <span>title: {{ partner.product.title }}</span>
+                            <span>price: {{ partner.price }}</span>
                         </li>
 
                     {% endfor %}
