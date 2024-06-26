@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin import register
 
-from catalogue.models import Category, Brand, ProductType, ProductAttribute, Product
+from catalogue.models import Category, Brand, ProductType, ProductAttribute, Product, ProductImage
 
 
 class ProductAttributeInline(admin.TabularInline):
@@ -18,6 +18,11 @@ class ProductAttributeAdmin(admin.ModelAdmin):
     list_display = ["title", "product_type", "attribute_type"]
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 2
+
+
 @register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["upc", "title", "product_type", "category", "brand", "description", "is_active"]
@@ -25,6 +30,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ["is_active"]
     list_display_links = ["title", "upc"]
     search_fields = ["title", "upc", "category__title", "brand__title"]
+    inlines = [ProductImageInline]
+
+
+@register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ["image", "product"]
 
 
 admin.site.register(Category)

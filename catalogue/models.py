@@ -91,6 +91,14 @@ class Product(models.Model):
     objects = ProductManager()
 
 
+class ProductImage(models.Model):
+    image = models.ImageField(upload_to="products/")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
+
+    def __str__(self):
+        return str(self.product)
+
+
 class ProductAttributeValue(models.Model):
     value = models.BigIntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="values")
