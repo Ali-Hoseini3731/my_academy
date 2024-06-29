@@ -68,6 +68,21 @@ nav.nav-bar {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
 }
 
+.product-detail > .back {
+    background-color: #0000ff;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin: 0 0 10px 10px;
+    border-radius: 15px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .product-image {
     background-color: #f9f9f9;
     padding: 15px;
@@ -80,6 +95,9 @@ nav.nav-bar {
 .product-image img {
     width: 150px;
     height: 150px;
+    border-radius: 15px;
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 1.1);
+    margin: 0 3px;
 }
 
 .product-detail > ul {

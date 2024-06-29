@@ -4,11 +4,14 @@
 
 {% block data %}
     <div class="product-detail">
+        <a href="{% url 'products_list' %}" class="back">back</a>
+    
         <div class="product-image">
             {% for pi in product.images.all %}
-                <img src="{{ pi.image.url }}" />
+                <img src="{{ pi.image.url }}"/>
             {% endfor %}
         </div>
+
         <ul>
             <li>title: {{ product.title }}</li>
             <li>upc: {{ product.upc }}</li>
