@@ -11,6 +11,16 @@ class Basket(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def add_to_basket(self, product, quantity=1):
+        if self.lines.filter(product=product).exists():
+            product_line = self.lines.get(product=product)
+            product_line.quantity += quantity
+            product_line.save()
+        else:
+            product_line = self.lines.create(product=product, quantity=quantity)
+
+        return product_line
+
 
 class BasketLine(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE, related_name="lines")

@@ -5,7 +5,7 @@
 {% block data %}
     <div class="product-detail">
         <a href="{% url 'products_list' %}" class="back">back</a>
-    
+
         <div class="product-image">
             {% for pi in product.images.all %}
                 <img src="{{ pi.image.url }}"/>
@@ -32,5 +32,17 @@
                 </ul>
             </li>
         </ul>
+
+        <div class="add-basket">
+            <form method="post" action="{% url 'add_to_basket' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}"/>
+                <input type="hidden" name="next" value="{{ request.build_absolute_uri }}" />
+                <input type="text" name="quantity" value="1"/>
+                <button type="submit"> add to basekt</button>
+            </form>
+        </div>
+
+
     </div>
 {% endblock %}
