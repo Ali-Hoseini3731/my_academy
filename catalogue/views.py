@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 
+from basket.forms import AddToBasketForm
 from catalogue.models import Product, Category, Brand
 
 
@@ -21,7 +22,12 @@ def product_detail(request, pk):
     queryset = Product.objects.filter(Q(pk=pk) | Q(upc=pk))
     if queryset.exists():
         product = queryset.first()
-        return render(request, "catalogue/product_detail.html", {"product": product})
+        form = AddToBasketForm({"product": product.id, "quantity": 1})
+        return render(
+            request,
+            "catalogue/product_detail.html",
+            {"product": product, "form": form}
+        )
     return HttpResponse("product does not exist")
 
 
