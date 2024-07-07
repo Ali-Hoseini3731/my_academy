@@ -11,7 +11,30 @@ class Basket(models.Model):
     def __str__(self):
         return str(self.user)
 
-    def add_to_basket(self, product, quantity=1):
+    @classmethod
+    def get_basket(cls, basket_id):
+        if basket_id is None:
+            basket = cls.objects.create()
+        else:
+            try:
+                basket = cls.objects.get(id=basket_id)
+            except cls.DoesNotExist:
+                basket = None
+        return basket
+
+    def validate_user(self, user):
+        if user.is_authenticated:
+            if self.user is not None and self.user != user:
+                return False
+            if self.user is None:
+                self.user = user
+                self.save()
+        elif user is not None:
+            return False
+
+        return True
+
+    def add(self, product, quantity=1):
         if self.lines.filter(product=product).exists():
             product_line = self.lines.get(product=product)
             product_line.quantity += quantity
