@@ -9,10 +9,12 @@
     cursor: pointer;
     text-decoration: none;
 }
-.btn_blue{
-       background: #1e1ee7;
+
+.btn_blue {
+    background: #1e1ee7;
 }
-.btn-warning{
+
+.btn-warning {
     background-color: #dc7878;
 }
 
@@ -31,7 +33,6 @@
 }
 
 
-
 .list-address {
     background-color: #b5e9b5;
     padding: 20px 50px;
@@ -46,11 +47,24 @@
     margin-bottom: 50px;
 }
 
+.list-address > table, thead, tbody, tr {
+    display: block;
+}
+.list-address > table  th, td{
+    display: inline-block;
+}
+
 .list-address > table {
     width: 100%;
+    height: 400px;
     text-align: center;
     border: 1px solid #6b72dd;
+    overflow-y: auto;
 }
-.list-address > table tr{
+
+.list-address > table tr td,th {
     border: 1px solid #6b72dd;
+    padding: 10px 0;
+    width: 19%;
+    overflow-x: auto;
 }
