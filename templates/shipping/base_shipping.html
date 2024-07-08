@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'shipping/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <h3 class="user">{{ request.user.username }}</h3>
+
+    {% block data %}
+    {% endblock %}
+
+{% endblock %}

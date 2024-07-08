@@ -4,10 +4,16 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
 
 from shipping.forms import ShippingAddressForm
+from shipping.models import ShippingAddress
 
-
+@login_required
 def list_address(request):
-    return HttpResponse("address list")
+    addresses = ShippingAddress.objects.filter(user=request.user)
+    return render(
+        request,
+        'shipping/list.html',
+        {"addresses": addresses}
+    )
 
 
 @login_required
