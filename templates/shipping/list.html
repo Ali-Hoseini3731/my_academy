@@ -1,0 +1,35 @@
+{% extends 'shipping/base_shipping.html' %}
+
+{% block title %} List Addresses {% endblock %}
+
+{% block data %}
+    <div class="list-address">
+        <a href="{% url 'create_address' %}" class="my_btn btn_blue">Create Address</a>
+        <h3> List Addresses</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>city</th>
+                <th>zipcode</th>
+                <th>number</th>
+                <th>created_time</th>
+                <th>address</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for address in addresses %}
+                <tr>
+                    <td>{{ address.user }}</td>
+                    <td>{{ address.zipcode }}</td>
+                    <td>{{ address.number }}</td>
+                    <td>{{ address.created_time }}</td>
+                    <td>{{ address.address }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

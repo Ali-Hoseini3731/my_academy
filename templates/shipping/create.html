@@ -1,0 +1,15 @@
+{% extends "shipping/base_shipping.html" %}
+
+{% block title %} Create New Address {% endblock %}
+
+{% block data %}
+    <div class="new-address">
+        <a href="{% url 'list_address' %}" class="my_btn btn-warning"> List Addresses</a>
+        <h3>Create New Shipping Address</h3>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="my_btn btn_blue">create shipping address</button>
+        </form>
+    </div>
+{% endblock %}
