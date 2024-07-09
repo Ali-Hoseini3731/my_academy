@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'blug.apps.BlugConfig',
     'catalogue.apps.CatalogueConfig',
     'transaction.apps.TransactionConfig',
     'partner.apps.PartnerConfig',
@@ -132,3 +133,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
