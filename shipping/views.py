@@ -1,34 +1,25 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
-from django.views import View
 from django.views.decorators.http import require_http_methods
-
+from django.views.generic import ListView
 from shipping.forms import ShippingAddressForm
 from shipping.models import ShippingAddress
 
 
-@login_required
-def list_address(request):
-    addresses = ShippingAddress.objects.filter(user=request.user).order_by("-id")
-    return render(
-        request,
-        'shipping/list.html',
-        {"addresses": addresses}
-    )
-
-
-class ListAddressView(View):
+class ListAddressView(ListView):
+    model = ShippingAddress
+    template_name = "shipping/list.html"
+    context_object_name = "addresses"
 
     @method_decorator(login_required)
-    def get(self, request):
-        addresses = ShippingAddress.objects.filter(user=request.user).order_by("-id")
-        return render(
-            request,
-            'shipping/list.html',
-            {"addresses": addresses}
-        )
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(user=self.request.user)
+
 
 
 @login_required
