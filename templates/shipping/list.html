@@ -4,7 +4,7 @@
 
 {% block data %}
     <div class="list-address">
-        <a href="{% url 'create_address' %}" class="my_btn btn_blue">Create Address</a>
+        <a href="{% url 'address_create' %}" class="my_btn btn_blue">Create Address</a>
         <h3> List Addresses</h3>
         <table>
             <thead>
@@ -20,11 +20,11 @@
             <tbody>
             {% for address in addresses %}
                 <tr>
-                    <td>{{ address.user }}</td>
-                    <td>{{ address.zipcode }}</td>
-                    <td>{{ address.number }}</td>
-                    <td>{{ address.created_time }}</td>
-                    <td>{{ address.address }}</td>
+                <td>{{ address.city }}</td>
+                <td>{{ address.zipcode }}</td>
+                <td>{{ address.number }}</td>
+                <td>{{ address.created_time }}</td>
+                <td>{{ address.address }}</td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
 from basket.forms import AddToBasketForm
 from catalogue.models import Product, Category, Brand
@@ -9,8 +10,12 @@ from catalogue.models import Product, Category, Brand
 def products_list(request):
     context = dict()
     context["products"] = Product.objects.all()
-    context["categories"] = Category.objects.all()
-    return render(request, "catalogue/product-list.html", context)
+    return render(request, "catalogue/product_list.html", context)
+
+
+class ProductsListView(ListView):
+    model = Product
+    context_object_name = "products"
 
 
 def product_detail(request, pk):
@@ -29,6 +34,17 @@ def product_detail(request, pk):
             {"product": product, "form": form}
         )
     return HttpResponse("product does not exist")
+
+
+class ProductDetailView(DetailView):
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = AddToBasketForm({"product": self.object.id, "quantity": 1})
+        return context
+
+
 
 
 def product_search(request):
